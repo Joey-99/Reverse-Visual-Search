@@ -10,3 +10,5 @@ Email: hl4346@nyu.edu
 Email: yz7736@nyu.edu
 -----
 ## AWS contact person
+Name: Hansheng Li  
+Email: hl4346@nyu.edu
