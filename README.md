@@ -3,7 +3,7 @@
 -----
 ## Team Members:
 1) Name: Weicheng Dai  
-Email:
+Email: wd2119@nyu.edu
 2) Name: Hansheng Li  
 Email:
 3) Name: Yunyi Zhu  
