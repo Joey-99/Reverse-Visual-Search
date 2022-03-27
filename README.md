@@ -5,7 +5,7 @@
 1) Name: Weicheng Dai  
 Email: wd2119@nyu.edu
 2) Name: Hansheng Li  
-Email:
+Email: hl4346@nyu.edu
 3) Name: Yunyi Zhu  
 Email: yz7736@nyu.edu
 -----
