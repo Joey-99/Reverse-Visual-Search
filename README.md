@@ -1,5 +1,6 @@
 # Reverse-Visual-Search
 CSGY 6613 AI project Team 8
+
 To run this improved version, you should first run
 ```
 python main_copy.py
