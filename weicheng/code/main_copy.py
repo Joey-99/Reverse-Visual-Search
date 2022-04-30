@@ -28,63 +28,31 @@ np.random.seed(manualSeed)
 np.random.RandomState(manualSeed)
 
 # %%
+## creating dataset
 lfw_people = LFWPairs(root='/home/weicheng/selfLearning/facenet/project/lfw', 
                        download=True, transform=T.Compose([
                 T.Resize(size=(250,250)),
-                # T.RandomHorizontalFlip(0.5),
-                # T.RandomRotation(degrees=10, interpolation=InterpolationMode.BILINEAR),
                 T.ToTensor(),
-                # T.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
             ]))
 
 # %%
+## create model, we can use pretrained or not
 resnet = InceptionResnetV1(classify=False, pretrained='vggface2')
-# resnet.logits = torch.nn.Linear(512, 5749)
 resnet = resnet.cuda(0)
-# resnet.load_state_dict(torch.load("../model/epoch_500.pth"), map_location=lambda storage, loc: storage)
 resnet.train()
 
 # %%
+## create dataloader to minimize the use of cpu
 loader = Data.DataLoader(
     dataset=lfw_people,
     batch_size=32,
     shuffle=True, drop_last=True)
 
+## optimizer and loss function
 optimizer = optim.Adam(resnet.parameters(), lr=1e-3, betas=(0.9, 0.999), eps=1e-09, weight_decay=1e-6)
 scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[10, 20, 50, 100, 200, 500])
 criterion = torch.nn.MSELoss()
 
-# %%
-def random_rot_flip(image):
-    new_image = []
-    for i in range(image.shape[0]):
-        k = np.random.randint(0, 4)
-        image_i = np.rot90(image[i], k)
-        # label = np.rot90(label, k)
-        axis = np.random.randint(0, 2)
-        image_i = np.flip(image_i, axis=axis).copy()
-        new_image.append(np.array(image_i))
-    image = np.array(new_image, dtype=np.float64)
-    return image
-
-def random_rotate(image):
-    new_image = []
-    for i in range(image.shape[0]):
-        angle = np.random.randint(-20, 20)
-        image_i = ndimage.rotate(image[i], angle, order=0, reshape=False)
-        new_image.append(np.array(image_i))
-    image = np.array(new_image, dtype=np.float64)
-    return image
-
-
-# def random_noise(image):
-#     new_image = []
-#     sigma = random.uniform(0.15, 1.15)
-#     for i in range(image.shape[0]):
-#         image_i = ToPILImage()(image[i]).filter(ImageFilter.GaussianBlur(radius=sigma))
-#         new_image.append(np.array(image_i))
-#     image = np.array(new_image, dtype=np.float64)
-#     return image
 
 # %%
 class ContrastiveLoss(torch.nn.Module):
@@ -103,17 +71,9 @@ class ContrastiveLoss(torch.nn.Module):
         losses = 0.5 * (target.float() * distances +
                         (1 + -1 * target).float() * torch.nn.functional.relu(self.margin - (distances + self.eps).sqrt()).pow(2))
         return losses.mean() if size_average else losses.sum()
+contra = ContrastiveLoss(margin=10)
 
-# %%
-def accuracy(outputs, labels):
-    total = 0
-    correct = 0
-    _, predicted = torch.max(outputs.data, 1) ##
-    total += labels.size(0)
-    correct += (predicted == labels).sum().item()
-    return correct/total
-
-
+## use MTCNN to find aligned faces
 def process_ndarray(img1_cv2):
     for i in range(img1_cv2.shape[0]):
         # print(img1_cv2[i].squeeze().shape) # (160, 160, 3)
@@ -144,13 +104,10 @@ def process_ndarray(img1_cv2):
 
     
 # %%
-contra = ContrastiveLoss(margin=10)
-for epoch in range(1000):
+## training session
+for epoch in range(200):
     list_loss = []
-    # list_acc = []
     for step, (batch_x, batch_y, target) in enumerate(tqdm(loader)):
-        # inputs, labels = batch_x, batch_y
-        # inputs, labels = inputs.cuda(0), labels.cuda(0)
         img1, img2, target = batch_x, batch_y, target.cuda()
         img1 = img1.view(img1.shape[0], img1.shape[2], img1.shape[3], img1.shape[1])
         img2 = img2.view(img2.shape[0], img2.shape[2], img2.shape[3], img2.shape[1])
@@ -169,13 +126,11 @@ for epoch in range(1000):
         # pred_softmax = torch.softmax(pred, dim=-1)
         loss = contra(pred1, pred2, target) + (consist1+consist2)
         list_loss.append(loss.item())
-        # list_acc.append(accuracy(outputs=pred_softmax, labels=labels))
         loss.backward()
         optimizer.step()
         scheduler.step()
     # break
     print('loss in epoch {} is '.format(epoch), sum(list_loss)/len(list_loss))
-    # print('acc in epoch {} is '.format(epoch), sum(list_acc)/len(list_acc))
     if(epoch%10==0):
         save_mode_path = os.path.join('../model_mtcnn', 'epoch_' + str(epoch) + '.pth')
         torch.save(resnet.state_dict(), save_mode_path)
