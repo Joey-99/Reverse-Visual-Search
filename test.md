@@ -1,5 +1,3 @@
-<!-- Output copied to clipboard! -->
-
 <!-----
 
 You have some errors, warnings, or alerts. If you are using reckless mode, turn it off to see inline alerts.
@@ -7,7 +5,7 @@ You have some errors, warnings, or alerts. If you are using reckless mode, turn 
 * WARNINGs: 2
 * ALERTS: 22
 
-Conversion time: 1.44 seconds.
+Conversion time: 1.547 seconds.
 
 
 Using this Markdown file:
@@ -20,7 +18,7 @@ Using this Markdown file:
 Conversion notes:
 
 * Docs to Markdown version 1.0β33
-* Sat Apr 30 2022 11:18:51 GMT-0700 (PDT)
+* Sat Apr 30 2022 11:20:56 GMT-0700 (PDT)
 * Source doc: AI-Report
 
 WARNING:
