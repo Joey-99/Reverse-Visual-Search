@@ -1,6 +1,5 @@
 # Reverse-Visual-Search
 *CSGY 6613 AI project Team 8*
-___ 
 ## 1. Team Members:
 * Name: Weicheng Dai  
 Email: wd2119@nyu.edu
@@ -8,17 +7,14 @@ Email: wd2119@nyu.edu
 Email: hl4346@nyu.edu
 * Name: Yunyi Zhu  
 Email: yz7736@nyu.edu
-____
 ## 2. AWS contact person
 * Name: Hansheng Li  
 Email: hl4346@nyu.edu  
-___
 ## 3. Project content
 * ### code folder  
 It includes our code which can be divied into 3 parts: Reverse Image Search - Baseline, Reverse Image Search Improvement and Reverse Video Search for the extra credit.
 * ### docs folder  
 It contains final report, supplementary material and img files.
-___
 ## 4. How to run and replicate results  
 * ### Reverse Image Search - Baseline  
 
