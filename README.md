@@ -17,6 +17,7 @@ It includes our code which can be divied into 3 parts: Reverse Image Search - Ba
 It contains final report, supplementary material and img files.
 ## 4. How to run and replicate results  
 * ### Reverse Image Search - Baseline  
+File name is "Reverse Image Search Baseline.ipynb" in code file, since it is a ipynb file, so you can just dowload the file and import to colab to run. In the github you can preview the code process and output.
 
 * ### Reverse Image Search Improvement   
 To run this improved version, you should first run
