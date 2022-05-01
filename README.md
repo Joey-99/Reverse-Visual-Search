@@ -31,4 +31,3 @@ To reproduce this part, you should cut video to images per frame and store in `v
 python image_similarity_main.py
 ```
 
-## Google Doc link: [Link](https://docs.google.com/document/d/1n6S98fXR3hGSwLtDXnbwvQIdsh-XbU3s4OX_wh5qhL8/edit)

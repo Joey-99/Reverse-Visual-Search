@@ -28,8 +28,10 @@ At first, we did not apply any noise filtering method, and view this problem as 
 ![image](https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure4.png)
 
 ## 5. Methods
-The main pipeline is shown in the figure below. Basically we use two models for our job. One is the MTCNN that preprocesses the image and gets the face that we want. And the other is an InceptionResNet with a decoder to get the embeddings of facial images and rebuild them with embeddings. The reason for utilizing a decoder is that we want to avoid the collapsed solution of getting the embeddings. The contrastive loss between embeddings is shown below:  
+The main pipeline is shown in the figure below. Basically we use two models for our job. One is the MTCNN that preprocesses the image and gets the face that we want. And the other is an InceptionResNet with a decoder to get the embeddings of facial images and rebuild them with embeddings. The reason for utilizing a decoder is that we want to avoid the collapsed solution of getting the embeddings. The contrastive loss between embeddings is shown below:
+<img src="https://render.githubusercontent.com/render/math?math=l_{contra} = \frac{1}{2} \times (\tau \times dis +(1+(-1) \times \tau) \times ReLu(mar-\sqrt {dis})^2)">  
 $$l_{contra} = \frac{1}{2} \times (\tau \times dis +(1+(-1) \times \tau) \times ReLu(mar-\sqrt {dis})^2)$$
+
 In this equation, $\tau$ is the target of two embeddings: 1 means they are from images of the same person, 0 otherwise. $dis$ means the euclidean distance between two embeddings. $mar$ is the margin between clusters. As we can see from the equation, when $\tau$ = 0, it means they are not from the same person, then we have to increase the distance of two embeddings, in which case we want the distance to be as large as possible. When $\tau$ =1, then we only compute the $\tau$ &times; $dis$, which means we want to minimize the distance.  
  The consistency loss is mean square error loss between the reconstructed image and the original one. We adopt this part to ensure that the embedding vector contains all the essential features in the original image. 
  ![image](https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure5.png)  
@@ -78,7 +80,7 @@ The result of the nearest 20 images in database, respect to the 10 query images 
 The result of reverse image search was salient, in that we can successfully retrieve the nearest neighbors in the embeddings of images. We have learnt the pipeline of preprocessing datasets, creating neural networks using pytorch, and finding useful loss functions that can better enhance the performance. Also, to use the knn search, we can use some useful tools in pytorch to compute the distance, which is very convenient.  
 For future use, maybe we can use more datasets to train the model, since the LFW dataset is actually highly imbalanced. Combining with other dataset would help a lot. We can thus build a larger database of embeddings and thus return more plausible results.  
 
-## Reverse Video Search 
+## 8. Extra credit: Reverse Video Search 
 Video can be seen as a combination of multiple frames of images. The experiment is divided into 3 steps in total. Firstly, cutting the video and each frame is cut into one image. Then, the image is fed into the feature detector. Three algorithms for calculating image similarity are used here.  
 1. ORB algorithm(Oriented FAST and Rotated BRIEF)  
 ORB can be used to quickly create feature vectors of key points in an image, which can be used to identify objects in the image. It can be divided into fast and brief parts which are the feature detection algorithm and vector creation algorithm, respectively.   
