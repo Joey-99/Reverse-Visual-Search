@@ -69,7 +69,7 @@ Now we have a model with good accuricity, next step is to create a feature vecto
 The result of the nearest 20 images, respect to the 10 query images  
 As you can see the result is not perfect, but still can find some correlation. There are many reasons for this, the main reason is the training data set is very unbalanced, data is not enough, or maybe the training model is not deep enough.  
 ![image](https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure12.png)
-
+<img src="https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure12.png" width="600"  >
 Reverse Image Search Improvement  
 In Reverse Image Search Improvement, the MTCNN was formerly trained with the Deepfake Detection Challenge and reloaded. In Inception Resnet part, the loss function is computed as this:$loss = l_{contra} + l_{consist}$, where $l_{contra}$ is represented by equation above, and $l_{consist}$ is the MSE loss between the generated image and the original image. We trained for 100 epochs with an initialized learning rate of 1e-3, then divided by 10 in epoch 10, 20 and 50. Whole training session takes about 10 hours.  
 The result of the nearest 20 images in database, respect to the 10 query images are shown as below:  
