@@ -29,7 +29,6 @@ At first, we did not apply any noise filtering method, and view this problem as 
 
 ## 5. Methods
 The main pipeline is shown in the figure below. Basically we use two models for our job. One is the MTCNN that preprocesses the image and gets the face that we want. And the other is an InceptionResNet with a decoder to get the embeddings of facial images and rebuild them with embeddings. The reason for utilizing a decoder is that we want to avoid the collapsed solution of getting the embeddings. The contrastive loss between embeddings is shown below:
-<img src="https://render.githubusercontent.com/render/math?math=l_{contra} = \frac{1}{2} \times (\tau \times dis +(1+(-1) \times \tau) \times ReLu(mar-\sqrt {dis})^2)">  
 $$l_{contra} = \frac{1}{2} \times (\tau \times dis +(1+(-1) \times \tau) \times ReLu(mar-\sqrt {dis})^2)$$
 
 In this equation, $\tau$ is the target of two embeddings: 1 means they are from images of the same person, 0 otherwise. $dis$ means the euclidean distance between two embeddings. $mar$ is the margin between clusters. As we can see from the equation, when $\tau$ = 0, it means they are not from the same person, then we have to increase the distance of two embeddings, in which case we want the distance to be as large as possible. When $\tau$ =1, then we only compute the $\tau$ &times; $dis$, which means we want to minimize the distance.  
