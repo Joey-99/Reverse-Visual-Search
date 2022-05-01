@@ -76,11 +76,9 @@ As you can see the result is not perfect, but still can find some correlation. T
 Reverse Image Search Improvement  
 In Reverse Image Search Improvement, the MTCNN was formerly trained with the Deepfake Detection Challenge and reloaded. In Inception Resnet part, the loss function is computed as this:
 
+![eq2](https://latex.codecogs.com/svg.latex?%5Cdpi%7B120%7D%20%5Clarge%20loss%20%3D%20l_%7Bcontra%7D%20&plus;%20l_%7Bconsist%7D)
 
-!(eq2)[https://latex.codecogs.com/svg.latex?%5Cdpi%7B120%7D%20%5Clarge%20loss%20%3D%20l_%7Bcontra%7D%20&plus;%20l_%7Bconsist%7D], where $l_{contra}$ 
-
-
-is represented by equation above, and $l_{consist}$ is the MSE loss between the generated image and the original image. We trained for 100 epochs with an initialized learning rate of 1e-3, then divided by 10 in epoch 10, 20 and 50. Whole training session takes about 10 hours.  
+, where $l_{contra}$ is represented by equation above, and $l_{consist}$ is the MSE loss between the generated image and the original image. We trained for 100 epochs with an initialized learning rate of 1e-3, then divided by 10 in epoch 10, 20 and 50. Whole training session takes about 10 hours.  
 The result of the nearest 20 images in database, respect to the 10 query images are shown as below:  
 ![image](https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure13.png) 
 
