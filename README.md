@@ -1,6 +1,6 @@
 # Reverse-Visual-Search
 *CSGY 6613 AI project Team 8*
-## 1. Team Members:
+## 1. Team members:
 * Name: Weicheng Dai  
 Email: wd2119@nyu.edu
 * Name: Hansheng Li  
