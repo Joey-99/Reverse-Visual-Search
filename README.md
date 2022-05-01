@@ -18,7 +18,7 @@ It contains final report, supplementary material and img files.
 ## 4. How to run and replicate results  
 * ### Reverse Image Search - Baseline  
 
-* ### Reverse Image Search Improvement  
+* ### Reverse Image Search Improvement   
 To run this improved version, you should first run
 ```
 python main_copy.py
