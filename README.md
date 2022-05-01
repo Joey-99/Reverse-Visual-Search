@@ -26,6 +26,9 @@ python main_copy.py
 After finishing the training session, you can use the model to run testing file. Follow the instructions in [test.ipynb](https://github.com/Joey-99/Reverse-Visual-Search/blob/master/weicheng/code/test.ipynb) (please download this file as it is large), choose the query images and number of returns as you like.
 
 * ### Reverse Video Search  
-
+To reproduce this part, you should cut video to images per frame and store in `video2pic` folder. Make sure the required packages are installed like [cv2](https://pypi.org/project/opencv-python/), [PIL](https://pillow.readthedocs.io/en/stable/installation.html). Then run
+```
+python image_similarity_main.py
+```
 
 ## Google Doc link: [Link](https://docs.google.com/document/d/1n6S98fXR3hGSwLtDXnbwvQIdsh-XbU3s4OX_wh5qhL8/edit)
