@@ -72,13 +72,26 @@ As you can see the result is not perfect, but still can find some correlation. T
 Reverse Image Search Improvement  
 In Reverse Image Search Improvement, the MTCNN was formerly trained with the Deepfake Detection Challenge and reloaded. In Inception Resnet part, the loss function is computed as this:$loss = l_{contra} + l_{consist}$, where $l_{contra}$ is represented by equation above, and $l_{consist}$ is the MSE loss between the generated image and the original image. We trained for 100 epochs with an initialized learning rate of 1e-3, then divided by 10 in epoch 10, 20 and 50. Whole training session takes about 10 hours.  
 The result of the nearest 20 images in database, respect to the 10 query images are shown as below:  
-![image](https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure13.png)
-
-Reverse Video Search  
+![image](https://github.com/Joey-99/Reverse-Visual-Search/blob/main/docs/img%20files/figure13.png) 
 
 ## 7. Conclusion
 The result of reverse image search was salient, in that we can successfully retrieve the nearest neighbors in the embeddings of images. We have learnt the pipeline of preprocessing datasets, creating neural networks using pytorch, and finding useful loss functions that can better enhance the performance. Also, to use the knn search, we can use some useful tools in pytorch to compute the distance, which is very convenient.  
 For future use, maybe we can use more datasets to train the model, since the LFW dataset is actually highly imbalanced. Combining with other dataset would help a lot. We can thus build a larger database of embeddings and thus return more plausible results.  
+
+## Reverse Video Search 
+Video can be seen as a combination of multiple frames of images. The experiment is divided into 3 steps in total. Firstly, cutting the video and each frame is cut into one image. Then, the image is fed into the feature detector. Three algorithms for calculating image similarity are used here.  
+1. ORB algorithm(Oriented FAST and Rotated BRIEF)  
+ORB can be used to quickly create feature vectors of key points in an image, which can be used to identify objects in the image. It can be divided into fast and brief parts which are the feature detection algorithm and vector creation algorithm, respectively.   
+ORB first looks for special regions, called keypoints, from the image. Keypoints are small areas of the image that stand out, such as corner points, for example, they have the characteristic of dramatically changing pixel values from light to dark. ORB then calculates the corresponding feature vector for each key point.  
+The feature vector created only contains 0 and 1, called a binary feature vector. The order of 1s and 0s varies depending on the particular keypoint and the region of pixels surrounding it. The vector represents the intensity pattern around the key point, so multiple feature vectors can be used to identify larger areas or even specific objects in the image.  
+ORB is characterized by being ultra-fast and somewhat independent of noise and image transformations, such as rotation and scaling transformations.  
+2. phash algorithm  
+First of all, unify the images into the same specifications, in this experiment we used a resolution of 256*256. Then, the images are grayed out at the pixel level. And apply DCT (discrete cosine transform) compression algorithm to the images. Then calculate  DCT mean value and hash value and compare each DCT value with the average value. If greater than or equal to the mean value, recorded as 1. Otherwise record as 0 and this generates a binary array. Finally, the pairing of images is performed and the Hamming distance is calculated to determine the similarity.  
+3. Histogram matching  
+Resize the image to get the same size image. Grayscale the image, the pixels of the image after grayscale are between 0-255. Calculate the histogram data of the image, count the probability distribution of the same pixel, and calculate the correlation of the histogram of two images.  
+The image histogram is rich in image detail information and reflects the probability distribution of image pixel points, counting the number of pixels each pixel point intensity value has. It is relatively small in computational effort. However, the histogram reflects the probability distribution of image gray value and does not have the spatial location information of the image in it, so it can be misjudged. For example, images with the same texture structure but different light and darkness should have high similarity, but the actual result is low similarity, while images with different texture structure but similar light and darkness have high similarity.  
+
+Finally we determine the final similarity by comparing the similarity of the three algorithms and setting the threshold.
 
 ## References
 1. Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments.
